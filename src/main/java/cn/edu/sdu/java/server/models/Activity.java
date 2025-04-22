@@ -2,7 +2,7 @@ package cn.edu.sdu.java.server.models;
 
 /*
  * Activity 活动实体类  保存活动的基本信息，
- * Integer activityId 人员表 activity 主键 activity_id
+ * Integer activityId 活动表 activity 主键 activity_id
  * String num 活动编号
  * String name 活动名称
  * String time 时间
