@@ -20,6 +20,7 @@ import java.util.Optional;
 public interface StudentRepository extends JpaRepository<Student,Integer> {
     Optional<Student> findByPersonPersonId(Integer personId);
     Optional<Student> findByPersonNum(String num);
+    List<Student> findByClassName(String className);
     List<Student> findByPersonName(String name);
 
     @Query(value = "from Student where ?1='' or person.num like %?1% or person.name like %?1% ")

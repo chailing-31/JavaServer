@@ -16,6 +16,10 @@ import jakarta.validation.constraints.Size;
  */
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -36,5 +40,11 @@ public class Student {
 
     @Size(max = 50)
     private String className;
+
+    @Column(length = 50)
+    private String phone;
+
+    @OneToMany(mappedBy = "student")
+    private List<LeaveApplication> leaveApplications = new ArrayList<>();
 
 }
