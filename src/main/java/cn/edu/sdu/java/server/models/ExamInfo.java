@@ -23,26 +23,23 @@ import java.util.Date;
 )
 public class ExamInfo {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer examInfoId;
+
     @ManyToOne
-    @JoinColumn(
-            name = "personId"
-    )
+    @JoinColumn(name = "personId")
     private Student student;
+
     @ManyToOne
-    @JoinColumn(
-            name = "courseId"
-    )
+    @JoinColumn(name = "courseId")
     private Course course;
+
     private String address;
+
     private String examKind;
+
     private Date examTime;
 
-    public ExamInfo() {
-    }
 
 
 
