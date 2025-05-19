@@ -40,5 +40,5 @@ public class Attendance {
         EARLY_LEAVE // 早退
     }
 
-    // 构造方法、getter/setter...
+
 }
