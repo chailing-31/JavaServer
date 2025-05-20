@@ -7,8 +7,6 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @Entity
@@ -28,11 +26,8 @@ public class Event {
     @Size(max = 50)
     private String location;
 
-    private LocalDateTime startTime;
-    private LocalDateTime endTime;
-
-    @Column(length = 500)
-    private String description;
+    private String startTime;
+    private String endTime;
 
     private Integer maxParticipants;
     private Integer currentParticipants = 0;

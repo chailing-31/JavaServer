@@ -21,23 +21,68 @@ public class EventService {
     }
 
     public DataResponse getEventList(DataRequest dataRequest) {
-        String keyword = dataRequest.getString("keyword");
-        String type = dataRequest.getString("type");
-        String startStartStr = dataRequest.getString("startStart");
-        String endStartStr = dataRequest.getString("endStart");
-        return CommonMethod.getReturnMessageOK();
+        String numName = dataRequest.getString("numName");
+        if(numName == null)
+            numName = "";
+        List<Event> elist = eventRepository.findEventListByNumName(numName);  //数据库查询操作
+        List<Map<String,Object>> dataList = new ArrayList<>();
+        Map<String,Object> m;
+        for (Event e : elist) {
+            m = new HashMap<>();
+            m.put("eventId", e.getEventId()+"");
+            m.put("eventName", e.getEventName());
+            m.put("eventType",e.getEventType());
+            m.put("location",e.getLocation());
+            m.put("startTime",e.getStartTime());
+            m.put("endTime",e.getEndTime());
+            m.put("maxParticipants", e.getMaxParticipants()+"");
+            m.put("currentParticipants", e.getCurrentParticipants()+"");
+            dataList.add(m);
+        }
+        return CommonMethod.getReturnData(dataList);
     }
 
     // 新增/修改活动
     public DataResponse eventSave(DataRequest dataRequest) {
-        Integer activityId = dataRequest.getInteger("activityId");
-        String activityName = dataRequest.getString("activityName");
-        String activityType = dataRequest.getString("activityType");
+        Integer eventId = dataRequest.getInteger("eventId");
+        String eventName = dataRequest.getString("eventName");
+        String eventType = dataRequest.getString("eventType");
         String location = dataRequest.getString("location");
-        String startTimeStr = dataRequest.getString("startTime");
-        String endTimeStr = dataRequest.getString("endTime");
-        String description = dataRequest.getString("description");
+        String startTime = dataRequest.getString("startTime");
+        String endTime = dataRequest.getString("endTime");
         Integer maxParticipants = dataRequest.getInteger("maxParticipants");
+        Integer currentParticipants = dataRequest.getInteger("currentParticipants");
+
+        Optional<Event> op;
+        Event event = null;
+
+        // 检查是否存在现有活动
+        if(eventId != null) {
+            op = eventRepository.findById(eventId);
+            if(op.isPresent())
+                event = op.get();
+        }
+
+        // 创建新活动对象
+        if(event == null)
+            event = new Event();
+
+
+
+        // 设置属性
+        event.setEventId(eventId);
+        event.setEventName(eventName);
+        event.setEventType(eventType);
+        event.setLocation(location);
+        event.setStartTime(startTime);
+        event.setEndTime(endTime);
+        event.setMaxParticipants(maxParticipants);
+        event.setCurrentParticipants(currentParticipants);
+
+
+        // 保存到数据库
+        eventRepository.save(event);
+
         return CommonMethod.getReturnMessageOK();
     }
 
@@ -52,15 +97,14 @@ public class EventService {
 
     // 报名功能
     public DataResponse joinEvent(DataRequest dataRequest) {
-        Integer activityId = dataRequest.getInteger("activityId");
-        Integer userId = dataRequest.getInteger("userId");
+        Integer eventId = dataRequest.getInteger("eventId");
 
-        Optional<Event> activityOp = eventRepository.findById(activityId);
-        if(!activityOp.isPresent()) {
+        Optional<Event> eventOp = eventRepository.findById(eventId);
+        if(!eventOp.isPresent()) {
             return CommonMethod.getReturnMessageError("活动不存在");
         }
 
-        Event event = activityOp.get();
+        Event event = eventOp.get();
         if(event.getCurrentParticipants() >= event.getMaxParticipants()) {
             return CommonMethod.getReturnMessageError("活动人数已满");
         }
@@ -70,24 +114,5 @@ public class EventService {
         return CommonMethod.getReturnMessageOK();
     }
 
-    private LocalDateTime parseDateTime(String dateTimeStr) throws DateTimeParseException {
-        if(dateTimeStr == null || dateTimeStr.isEmpty()) return null;
-        return LocalDateTime.parse(dateTimeStr.replace(" ", "T"));
-    }
-
-    private List<Map<String, Object>> convertToMapList(List<Event> activities) {
-        List<Map<String, Object>> result = new ArrayList<>();
-        for (Event a : activities) {
-            Map<String, Object> map = new HashMap<>();
-            map.put("eventId", a.getEventId());
-            map.put("eventName", a.getEventName());
-            map.put("startTime", a.getStartTime().toString());
-            map.put("endTime", a.getEndTime().toString());
-            map.put("currentParticipants", a.getCurrentParticipants());
-            map.put("maxParticipants", a.getMaxParticipants());
-            result.add(map);
-        }
-        return result;
-    }
 
 }
