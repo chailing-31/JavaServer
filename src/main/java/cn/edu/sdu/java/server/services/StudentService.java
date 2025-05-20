@@ -7,6 +7,7 @@ import cn.edu.sdu.java.server.repositorys.*;
 import cn.edu.sdu.java.server.util.ComDataUtil;
 import cn.edu.sdu.java.server.util.CommonMethod;
 import cn.edu.sdu.java.server.util.DateTimeTool;
+import jakarta.transaction.Transactional;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.*;
@@ -24,6 +25,7 @@ import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBo
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.List;
 
@@ -38,6 +40,8 @@ public class StudentService {
     private final FeeRepository feeRepository;  //消费数据操作自动注入
     private final FamilyMemberRepository familyMemberRepository;
     private final SystemService systemService;
+    private final CharSequence defaultPassword = "123456";
+
     public StudentService(PersonRepository personRepository, StudentRepository studentRepository, UserRepository userRepository, UserTypeRepository userTypeRepository, PasswordEncoder encoder,  FeeRepository feeRepository, FamilyMemberRepository familyMemberRepository, SystemService systemService) {
         this.personRepository = personRepository;
         this.studentRepository = studentRepository;
@@ -131,7 +135,7 @@ public class StudentService {
         return CommonMethod.getReturnData(getMapFromStudent(s)); //这里回传包含学生信息的Map对象
     }
 
-    public DataResponse studentEditSave(DataRequest dataRequest) {
+    /*public DataResponse studentEditSave(DataRequest dataRequest) {
         Integer personId = dataRequest.getInteger("personId");
         Map<String,Object> form = dataRequest.getMap("form"); //参数获取Map对象
         String num = CommonMethod.getString(form, "num");  //Map 获取属性的值
@@ -198,6 +202,97 @@ public class StudentService {
         studentRepository.save(s);  //修改保存学生信息
         systemService.modifyLog(s,isNew);
         return CommonMethod.getReturnData(s.getPersonId());  // 将personId返回前端
+    }*/
+
+    @Transactional
+    public DataResponse studentEditSave(DataRequest dataRequest) {
+        try {
+            Integer personId = dataRequest.getInteger("personId");
+            Map<String, Object> form = dataRequest.getMap("form");
+            String num = CommonMethod.getString(form, "num");
+
+            // 验证学号是否已存在
+            Optional<Person> existingPerson = personRepository.findByNum(num);
+            if (existingPerson.isPresent() && (personId == null || !existingPerson.get().getPersonId().equals(personId))) {
+                return CommonMethod.getReturnMessageError("学号已存在");
+            }
+
+            // 获取或创建Person
+            Person person = personId != null ?
+                    personRepository.findById(personId).orElseThrow(() -> new RuntimeException("人员不存在")) :
+                    createNewPerson(num);
+
+            // 更新Person信息
+            updatePersonInfo(person, form);
+            personRepository.save(person);
+
+            // 处理User账号
+            handleUserAccount(person, num);
+
+            // 处理Student信息
+            Student student = personId != null ?
+                    studentRepository.findByPersonPersonId(personId).orElseThrow(() -> new RuntimeException("学生信息不存在")) :
+                    createNewStudent(person);
+
+            updateStudentInfo(student, form);
+            studentRepository.save(student);
+
+            systemService.modifyLog(student, personId == null);
+
+            return CommonMethod.getReturnData(person.getPersonId());
+        } catch (Exception e) {
+            return CommonMethod.getReturnMessageError("保存失败: " + e.getMessage());
+        }
+    }
+
+    private Person createNewPerson(String num) {
+        Person person = new Person();
+        person.setNum(num);
+        person.setType("1");
+        return personRepository.save(person);
+    }
+
+    private Student createNewStudent(Person person) {
+        Student student = new Student();
+        student.setPerson(person);
+        return studentRepository.save(student);
+    }
+
+    private void updatePersonInfo(Person person, Map<String, Object> form) {
+        person.setName(CommonMethod.getString(form, "name"));
+        person.setDept(CommonMethod.getString(form, "dept"));
+        person.setCard(CommonMethod.getString(form, "card"));
+        person.setGender(CommonMethod.getString(form, "gender"));
+        person.setBirthday(CommonMethod.getString(form, "birthday"));
+        person.setEmail(CommonMethod.getString(form, "email"));
+        person.setPhone(CommonMethod.getString(form, "phone"));
+        person.setAddress(CommonMethod.getString(form, "address"));
+    }
+
+    private void updateStudentInfo(Student student, Map<String, Object> form) {
+        student.setMajor(CommonMethod.getString(form, "major"));
+        student.setClassName(CommonMethod.getString(form, "className"));
+    }
+
+    private void handleUserAccount(Person person, String username) {
+        userRepository.findByPerson(person).ifPresentOrElse(
+                user -> {
+                    if (!user.getUserName().equals(username)) {
+                        user.setUserName(username);
+                        userRepository.save(user);
+                    }
+                },
+                () -> {
+                    User user = new User();
+                    user.setPerson(person);
+                    user.setUserName(username);
+                    user.setPassword(encoder.encode(defaultPassword));
+                    user.setUserType(userTypeRepository.findByName(EUserType.ROLE_STUDENT));
+                    user.setCreateTime(String.valueOf(LocalDateTime.now()));
+                    user.setCreatorId(CommonMethod.getPersonId());
+                    userRepository.save(user);
+                }
+        );
     }
 
     public List<Map<String,Object>> getStudentScoreList(List<Score> sList) {

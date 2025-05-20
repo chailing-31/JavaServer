@@ -1,6 +1,7 @@
 package cn.edu.sdu.java.server.repositorys;
 
 
+import cn.edu.sdu.java.server.models.Person;
 import cn.edu.sdu.java.server.models.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -23,6 +24,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     Optional<User> findByUserName(String userName);
     Optional<User> findByPersonNum(String perNum);
     Optional<User> findByPersonPersonId(Integer personId);
+    Optional<User> findByPerson(Person person);
 
 
     Boolean existsByUserName(String userName);
