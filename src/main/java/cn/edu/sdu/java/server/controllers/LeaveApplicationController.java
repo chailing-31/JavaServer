@@ -1,4 +1,4 @@
-package cn.edu.sdu.java.server.controllers;
+/*package cn.edu.sdu.java.server.controllers;
 
 
 import cn.edu.sdu.java.server.models.LeaveApplication;
@@ -16,9 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/leave-applications")
 public class LeaveApplicationController {
-    private final LeaveApplicationService leaveApplicationService;
-    private final StudentRepository studentRepository;
-
+    private  LeaveApplicationService leaveApplicationService;
+    private  StudentRepository studentRepository;
     @Autowired
     public LeaveApplicationController(LeaveApplicationService leaveApplicationService,
                                       StudentRepository studentRepository) {
@@ -91,4 +90,4 @@ public class LeaveApplicationController {
         return ResponseEntity.ok(
                 leaveApplicationService.hasOverlappingLeaves(studentId, startTime, endTime));
     }
-}
+}*/

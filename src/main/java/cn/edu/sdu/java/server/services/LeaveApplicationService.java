@@ -1,4 +1,4 @@
-package cn.edu.sdu.java.server.services;
+/*package cn.edu.sdu.java.server.services;
 
 import cn.edu.sdu.java.server.models.LeaveApplication;
 import cn.edu.sdu.java.server.models.Teacher;
@@ -36,6 +36,8 @@ public class LeaveApplicationService {
     /**
      * 提交请假申请
      */
+
+/*
     public LeaveApplication submitLeaveApplication(LeaveApplication leaveApplication) {
         // 检查时间冲突
         if (hasOverlappingLeaves(
@@ -52,7 +54,12 @@ public class LeaveApplicationService {
     /**
      * 批准请假申请
      */
-    public LeaveApplication approveLeaveApplication(Integer applicationId, Integer teacherId, String comment) {
+
+
+
+
+/*
+public LeaveApplication approveLeaveApplication(Integer applicationId, Integer teacherId, String comment) {
         LeaveApplication application = getValidApplication(applicationId);
         Teacher teacher = getTeacher(teacherId);
 
@@ -69,6 +76,8 @@ public class LeaveApplicationService {
     /**
      * 拒绝请假申请
      */
+
+/*
     public LeaveApplication rejectLeaveApplication(Integer applicationId, Integer teacherId, String comment) {
         LeaveApplication application = getValidApplication(applicationId);
         Teacher teacher = getTeacher(teacherId);
@@ -84,6 +93,11 @@ public class LeaveApplicationService {
     /**
      * 取消请假申请
      */
+
+
+/*
+
+
     public void cancelLeaveApplication(Integer applicationId) {
         LeaveApplication application = getValidApplication(applicationId);
 
@@ -94,6 +108,10 @@ public class LeaveApplicationService {
     /**
      * 获取学生的所有请假申请
      */
+
+
+
+/*
     public List<LeaveApplication> getStudentLeaveApplications(Integer personId) {
         return leaveApplicationRepository.findByStudentPersonPersonId(personId);
     }
@@ -101,6 +119,9 @@ public class LeaveApplicationService {
     /**
      * 获取班级待审批的请假申请
      */
+
+
+/*
     public List<LeaveApplication> getPendingApplicationsByClass(String className) {
         return leaveApplicationRepository.findByStudentClassNameAndStatus(className, LeaveApplication.ApprovalStatus.PENDING);
     }
@@ -108,6 +129,9 @@ public class LeaveApplicationService {
     /**
      * 获取班级某天已批准的请假申请
      */
+
+
+/*
     public List<LeaveApplication> getApprovedApplicationsByClass(String className, LocalDate date) {
         LocalDateTime startOfDay = date.atStartOfDay();
         LocalDateTime endOfDay = date.atTime(LocalTime.MAX);
@@ -118,6 +142,9 @@ public class LeaveApplicationService {
     /**
      * 检查时间冲突
      */
+
+
+/*
     public boolean hasOverlappingLeaves(Integer studentId, LocalDateTime startTime, LocalDateTime endTime) {
         List<LeaveApplication> overlappingLeaves = leaveApplicationRepository
                 .findByStudentIdAndStatusNot(studentId, LeaveApplication.ApprovalStatus.REJECTED)
@@ -146,4 +173,4 @@ public class LeaveApplicationService {
                 .orElseThrow(() -> new RuntimeException("教师不存在"));
     }
 
-}
+}*/
