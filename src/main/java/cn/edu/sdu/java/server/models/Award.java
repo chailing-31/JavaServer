@@ -38,4 +38,9 @@ public class Award {
 
     @Size(max = 12)
     private String awardPath;
+    @Size(max = 20)
+    private String num;
+
+    @Size(max = 50)
+    private String name;
 }

@@ -31,6 +31,11 @@ public class Event {
 
     private Integer maxParticipants;
     private Integer currentParticipants = 0;
+    @Size(max = 20)
+    private String num;
+
+    @Size(max = 50)
+    private String name;
 
 }
 
