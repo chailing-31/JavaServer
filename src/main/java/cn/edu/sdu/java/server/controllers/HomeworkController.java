@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/api/examInfo")
+@RequestMapping("/api/homework")
 public class HomeworkController {
     private final HomeworkService homeworkService;
     public HomeworkController(HomeworkService homeworkService) {
