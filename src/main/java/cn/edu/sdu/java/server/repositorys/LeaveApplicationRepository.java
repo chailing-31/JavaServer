@@ -1,4 +1,4 @@
-/*package cn.edu.sdu.java.server.repositorys;
+package cn.edu.sdu.java.server.repositorys;
 
 import cn.edu.sdu.java.server.models.LeaveApplication;
 import io.lettuce.core.dynamic.annotation.Param;
@@ -28,6 +28,6 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
             @Param("startDate") LocalDateTime startDate,
             @Param("endDate") LocalDateTime endDate);
 
-    List<LeaveApplication> findByStudentIdAndStatusNot(Integer personId, LeaveApplication.ApprovalStatus status);
+    List<LeaveApplication> findByStudentPersonPersonIdAndStatusNot(Integer personId, LeaveApplication.ApprovalStatus status);
 
-}*/
+}

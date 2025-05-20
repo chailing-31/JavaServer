@@ -1,4 +1,4 @@
-/*package cn.edu.sdu.java.server.controllers;
+package cn.edu.sdu.java.server.controllers;
 
 
 import cn.edu.sdu.java.server.models.LeaveApplication;
@@ -90,4 +90,4 @@ public class LeaveApplicationController {
         return ResponseEntity.ok(
                 leaveApplicationService.hasOverlappingLeaves(studentId, startTime, endTime));
     }
-}*/
+}
