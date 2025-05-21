@@ -107,7 +107,7 @@ import java.util.*;
                 op= homeworkRepository.findById(HomeworkId);
                 if(op.isPresent()) {
                     h = op.get();
-                    homeworkRepository.delete(h);
+                    homeworkRepository.delete(h);//删除功能
                 }
             }
             return CommonMethod.getReturnMessageOK();
