@@ -61,10 +61,11 @@ import java.util.*;
                 m.put("className", h.getStudent().getClassName());
                 m.put("courseNum", h.getCourse().getNum());
                 m.put("courseName", h.getCourse().getName());
-                m.put("deadline" , h.getDeadline());
+                m.put("deadline" , h.getDeadline());//获取作业截止时间
                 m.put("homeworkId", h.getHomeworkId());
-                m.put("request", h.getRequest());
-                m.put("result", h.getResult());
+                m.put("request", h.getRequest());//获取作业要求
+                m.put("result", h.getResult());//获取作业提交结果
+                m.put("mark",""+h.getMark());//获取作业成绩
                 dataList.add(m);
             }
             return CommonMethod.getReturnData(dataList);
@@ -91,10 +92,10 @@ import java.util.*;
                 h.setStudent(studentRepository.findById(personId).get());
                 h.setCourse(courseRepository.findById(courseId).get());
             }
-            h.setDeadline(deadline);
-            h.setRequest(request);
-            h.setResult(result);
-            h.setMark(mark);
+            h.setDeadline(deadline);//增加作业截止时间
+            h.setRequest(request);//增加作业要求
+            h.setResult(result);//增加作业提交结果
+            h.setMark(mark);//增加作业成绩
             homeworkRepository.save(h);
             return CommonMethod.getReturnMessageOK();
         }
