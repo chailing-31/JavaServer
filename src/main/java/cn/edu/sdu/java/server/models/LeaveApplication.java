@@ -1,9 +1,13 @@
 package cn.edu.sdu.java.server.models;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "leave_applications")
 public class LeaveApplication {
@@ -24,10 +28,12 @@ public class LeaveApplication {
     @Column(nullable = false, length = 500)
     private String reason;
 
+    //请假类型
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private LeaveType leaveType;
 
+    //审批状态
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ApprovalStatus status = ApprovalStatus.PENDING;
@@ -36,10 +42,13 @@ public class LeaveApplication {
     @JoinColumn(name = "approver_id")
     private Teacher approver;
 
+    //审批评价
     @Column(length = 500)
     private String approvalComment;
 
+    //审批时间
     private LocalDateTime approvalTime;
+
 
     // 枚举定义请假类型
     public enum LeaveType {
@@ -47,6 +56,7 @@ public class LeaveApplication {
         PERSONAL_LEAVE,  // 事假
         OFFICIAL_LEAVE   // 公假
     }
+
 
     // 枚举定义审批状态
     public enum ApprovalStatus {
@@ -56,5 +66,5 @@ public class LeaveApplication {
         CANCELLED       // 已取消
     }
 
-    // 构造方法、getter/setter...
+
 }
