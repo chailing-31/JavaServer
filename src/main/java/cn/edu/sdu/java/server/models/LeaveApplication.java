@@ -66,5 +66,4 @@ public class LeaveApplication {
         CANCELLED       // 已取消
     }
 
-
 }

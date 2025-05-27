@@ -62,8 +62,8 @@ public class VolunteerService {
             m.put("activityName",s.getActivity().getName());
             m.put("time",s.getActivity().getTime());
             m.put("duration",""+s.getActivity().getDuration());
-            m.put("degree",""+s.getDegree());
-            m.put("type",""+s.getType());
+//            m.put("degree",""+s.getDegree());
+//            m.put("type",""+s.getType());
             dataList.add(m);
         }
         return CommonMethod.getReturnData(dataList);
