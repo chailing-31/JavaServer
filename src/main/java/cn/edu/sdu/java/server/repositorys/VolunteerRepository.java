@@ -13,10 +13,10 @@ import java.util.List;
 
 public interface VolunteerRepository extends JpaRepository<Volunteer,Integer> {
     List<Volunteer> findByStudentPersonId(Integer personId);
-    @Query(value="from Volunteer where (?1=0 or student.personId=?1) and (?2=0 or course.courseId=?2)" )
+    @Query(value="from Volunteer where (?1=0 or student.personId=?1) and (?2=0 or activity.activityId=?2)" )
     List<Volunteer> findByStudentActivity(Integer personId, Integer activityId);
 
-    @Query(value="from Volunteer where student.personId=?1 and (?2=0 or volunteer.name like %?2%)" )
+    @Query(value="from Volunteer where student.personId=?1 and (?2=0 or activity.name like %?2%)" )
     List<Volunteer> findByStudentVolunteer(Integer personId, String activityName);
 
 }
