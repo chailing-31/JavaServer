@@ -31,13 +31,24 @@ public class Attendance {
 
 
 
+
     // 枚举定义考勤状态
     public enum AttendanceStatus {
-        PRESENT,   // 出勤
-        ABSENT,    // 缺勤
-        LATE,      // 迟到
-        LEAVE,     // 请假
-        EARLY_LEAVE // 早退
+        PRESENT("出勤"),
+        ABSENT("缺勤"),
+        LATE("迟到"),
+        LEAVE("请假"),
+        EARLY_LEAVE("早退");
+
+        private final String displayName;
+
+        AttendanceStatus(String displayName) {
+            this.displayName = displayName;
+        }
+
+        public String getDisplayName() {
+            return displayName;
+        }
     }
 
 

@@ -15,7 +15,7 @@ public class OptionItem {
     private Integer id;
     private String value;
     private String title;
-    public OptionItem(){
+    public OptionItem(String name, String displayName){
 
     }
     public OptionItem(Integer id, String value, String title){
