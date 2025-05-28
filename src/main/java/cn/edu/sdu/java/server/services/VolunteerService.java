@@ -61,7 +61,9 @@ public class VolunteerService {
             m.put("activityNum",s.getActivity().getNum());
             m.put("activityName",s.getActivity().getName());
             m.put("time",s.getActivity().getTime());
-            m.put("duration",""+s.getActivity().getDuration());
+            m.put("duration",s.getActivity().getDuration());
+            m.put("hours", s.getHours() != null ? s.getHours().toString() : "0"); // 使用志愿者的hours字段
+            m.put("role", s.getRole()); // 确保包含role字段
 //            m.put("degree",""+s.getDegree());
 //            m.put("type",""+s.getType());
             dataList.add(m);
@@ -70,12 +72,20 @@ public class VolunteerService {
     }
 
     public DataResponse volunteerSave(DataRequest dataRequest) {
+
+//        //调试
+//        System.out.println("接收到的请求数据: " + dataRequest.getData());
+//        System.out.println("解析出的时长值: " + dataRequest.getInteger("hours"));
+
         Integer personId = dataRequest.getInteger("personId");
         Integer activityId = dataRequest.getInteger("activityId");
-//        Integer degree = dataRequest.getInteger("mark");
+        Integer hours = dataRequest.getInteger("hours"); // 获取时长
+        String role = dataRequest.getString("role"); // 获取角色
         Integer volunteerId = dataRequest.getInteger("volunteerId");
+
         Optional<Volunteer> op;
         Volunteer s = null;
+
         if(volunteerId != null) {
             op= volunteerRepository.findById(volunteerId);
             if(op.isPresent())
@@ -86,7 +96,14 @@ public class VolunteerService {
             s.setStudent(studentRepository.findById(personId).get());
             s.setActivity(activityRepository.findById(activityId).get());
         }
-//        s.setMark(mark);
+
+        // 设置时长和角色
+        if(hours != null) {
+            s.setHours(hours);
+        }
+        if(role != null) {
+            s.setRole(role);
+        }
         volunteerRepository.save(s);
         return CommonMethod.getReturnMessageOK();
     }
