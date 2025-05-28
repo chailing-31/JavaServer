@@ -3,6 +3,8 @@ package cn.edu.sdu.java.server.payload.response;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 /*
  * DataResponse 前端HTTP请求返回数据对象
  * Integer code 返回代码 0 正确返回 1 错误返回信息
@@ -24,5 +26,6 @@ public class DataResponse {
         this.data = data;
         this.msg = msg;
     }
+
 
 }

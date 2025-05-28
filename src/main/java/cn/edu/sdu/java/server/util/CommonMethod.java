@@ -15,8 +15,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
-
+import java.util.Map;
 /**
  * CommonMethod 公共处理方法实例类
  */
@@ -398,4 +400,47 @@ public class CommonMethod {
         style.setBorderRight(BorderStyle.THIN);
         return style;
     }
+
+    // 默认日期格式
+    private static final DateTimeFormatter DATE_FORMATTER =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    /**
+     * 从 Map 中获取 LocalDate 类型日期
+     * @param form 包含数据的 Map
+     * @param key 键名
+     * @return LocalDate 日期，如果解析失败则返回 null
+     */
+    public static LocalDate getLocalDate(Map<String, Object> form, String key) {
+        if (form == null || !form.containsKey(key)) {
+            return null;
+        }
+
+        Object value = form.get(key);
+        if (value == null) {
+            return null;
+        }
+
+        try {
+            if (value instanceof LocalDate) {
+                return (LocalDate) value;
+            } else if (value instanceof String) {
+                return LocalDate.parse((String) value, DATE_FORMATTER);
+            } else if (value instanceof Long) {
+                // 假设是时间戳（毫秒）
+                return LocalDate.ofEpochDay((Long) value / 86400000L);
+            }
+        } catch (Exception e) {
+            // 日志记录错误
+            System.err.println("解析日期失败: " + value);
+            return null;
+        }
+
+        return null;
+    }
+
+
+
+
+
 }
