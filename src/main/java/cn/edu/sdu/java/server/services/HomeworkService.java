@@ -69,33 +69,71 @@ import java.util.*;
                 dataList.add(m);
             }
             return CommonMethod.getReturnData(dataList);
-
         }
+
+        // 添加获取单个作业详情的方法
+        public DataResponse getHomeworkInfo(DataRequest dataRequest) {
+            Integer homeworkId = dataRequest.getInteger("homeworkId");
+            if(homeworkId == null) {
+                return CommonMethod.getReturnMessageError("作业ID不能为空");
+            }
+
+            Optional<Homework> op = homeworkRepository.findById(homeworkId);
+            if(!op.isPresent()) {
+                return CommonMethod.getReturnMessageError("作业不存在");
+            }
+
+            Homework h = op.get();
+            Map<String, Object> m = new HashMap<>();
+            // 字段映射
+            m.put("homeworkId", h.getHomeworkId());
+            m.put("num", h.getHomeworkId().toString()); // 暂时用作业ID作为编号
+            m.put("title", h.getRequest()); // 用作业要求作为标题
+            m.put("courseId", h.getCourse().getCourseId());
+            m.put("publishTime", new Date()); // 添加发布日期
+            m.put("deadline", h.getDeadline());
+            m.put("content", h.getRequest()); // 内容也使用作业要求
+            m.put("requirements", h.getRequest());
+            m.put("totalScore", 100); // 默认总分
+            m.put("status", "已发布"); // 默认状态
+            m.put("submissionType", "在线提交"); // 默认提交方式
+
+            return CommonMethod.getReturnData(m);
+        }
+
         public DataResponse homeworkSave(DataRequest dataRequest) {
-            Integer personId = dataRequest.getInteger("personId");
-            Integer courseId = dataRequest.getInteger("courseId");
-            Date deadline = dataRequest.getTime("deadline");
-            Integer HomeworkId = dataRequest.getInteger("HomeworkId");
-            Integer mark = dataRequest.getInteger("mark");
-            String request = dataRequest.getString("request");
-            String result = dataRequest.getString("result");
+            Map form = dataRequest.getMap("form");
+            if(form == null) {
+                form = new HashMap();
+            }
+
+            Integer homeworkId = dataRequest.getInteger("homeworkId");
+            Integer courseId = CommonMethod.getInteger(form, "courseId");
+            String request = CommonMethod.getString(form, "requirements");
+            Date deadline = CommonMethod.getDate(form, "deadline");
 
             Optional<Homework> op;
             Homework h = null;
-            if(HomeworkId != null) {
-                op= homeworkRepository.findById(HomeworkId);
-                if(op.isPresent())
+            if(homeworkId != null) {
+                op = homeworkRepository.findById(homeworkId);
+                if(op.isPresent()) {
                     h = op.get();
+                }
             }
+
             if(h == null) {
                 h = new Homework();
-                h.setStudent(studentRepository.findById(personId).get());
+                // 默认学生 - 可能需要修改
+                h.setStudent(studentRepository.findById(1).get());
                 h.setCourse(courseRepository.findById(courseId).get());
             }
-            h.setDeadline(deadline);//增加作业截止时间
-            h.setRequest(request);//增加作业要求
-            h.setResult(result);//增加作业提交结果
-            h.setMark(mark);//增加作业成绩
+
+            h.setRequest(request);
+            h.setDeadline(deadline);
+            // 设置其他字段默认值
+            h.setMark(0);
+            h.setResult("");
+
             homeworkRepository.save(h);
             return CommonMethod.getReturnMessageOK();
         }

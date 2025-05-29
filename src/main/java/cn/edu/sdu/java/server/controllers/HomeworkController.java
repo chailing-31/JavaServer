@@ -31,6 +31,10 @@ public class HomeworkController {
     public DataResponse getHomeworkList(@Valid @RequestBody DataRequest dataRequest) {
         return homeworkService.getHomeworkList(dataRequest);
     }
+    @PostMapping("/getHomeworkInfo")
+    public DataResponse getHomeworkInfo(@Valid @RequestBody DataRequest dataRequest) {
+        return homeworkService.getHomeworkInfo(dataRequest);
+    }
     @PostMapping("/homeworkSave")
     public DataResponse homeworkSave(@Valid @RequestBody DataRequest dataRequest) {
         return homeworkService.homeworkSave(dataRequest);
