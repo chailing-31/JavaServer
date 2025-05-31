@@ -43,7 +43,7 @@ public class LeaveService {
             Map<String, Object> data = new HashMap<>();
             data.put("leaveId", leave.getLeaveId());
             data.put("num", leave.getNum());
-            data.put("studentId", leave.getStudentId());
+            data.put("studentId", leave.getStudent().getPersonId());
             data.put("studentName",
                     leave.getStudent() != null && leave.getStudent().getPerson() != null
                             ? leave.getStudent().getPerson().getName()
@@ -55,6 +55,7 @@ public class LeaveService {
             data.put("reason", leave.getReason());
             data.put("status", leave.getStatus());
             data.put("approveComment", leave.getApproveComment());
+            data.put("teacherId",leave.getTeacher().getPersonId());
             result.add(data);
         }
 
@@ -71,7 +72,7 @@ public class LeaveService {
             Map<String, Object> data = new HashMap<>();
             data.put("leaveId", leave.getLeaveId());
             data.put("num", leave.getNum());
-            data.put("studentId", leave.getStudentId());
+            data.put("studentId", leave.getStudent().getPersonId());
             data.put("leaveType", leave.getLeaveType());
             data.put("startDate", leave.getStartDate() != null ? leave.getStartDate().toString() : "");
             data.put("endDate", leave.getEndDate() != null ? leave.getEndDate().toString() : "");
@@ -79,6 +80,7 @@ public class LeaveService {
             data.put("reason", leave.getReason());
             data.put("status", leave.getStatus());
             data.put("approveComment", leave.getApproveComment());
+            data.put("teacherId",leave.getTeacher().getPersonId());
             return data;
         }
         return null;
