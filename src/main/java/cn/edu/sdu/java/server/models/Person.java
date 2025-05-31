@@ -39,10 +39,10 @@ public class Person {
 
     @NotBlank    // 字段非空
     @Size(max = 20)   //字段长度最长为20
-    private String num;
+    private String num;//学号或教工号
 
     @Size(max = 50)
-    private String name;
+    private String name;//姓名
 
     @Size(max = 2)
     private String type;

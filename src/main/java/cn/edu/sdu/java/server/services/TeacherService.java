@@ -37,7 +37,6 @@ public class TeacherService {
         m.put("dept", teacher.getDept());
         m.put("card", teacher.getCard());
         m.put("gender", teacher.getGender());
-        m.put("birthday", teacher.getBirthday());
         m.put("email", teacher.getEmail());
         m.put("phone", teacher.getPhone());
         m.put("address", teacher.getAddress());
@@ -50,15 +49,15 @@ public class TeacherService {
      * 获取教师列表
      */
     public DataResponse getTeacherList(DataRequest dataRequest) {
-        String numName = dataRequest.getString("numName");
-        if (numName == null)
-            numName = "";
+        String name = dataRequest.getString("name");
+        if (name == null)
+            name = "";
 
         List<Person> teacherList;
-        if (numName.isEmpty()) {
+        if (name.isEmpty()) {
             teacherList = personRepository.findPersonListByType("2"); // 教师类型
         } else {
-            teacherList = personRepository.findPersonListByNumNameType(numName, "2");
+            teacherList = personRepository.findPersonListByNameAndType(name, "2");
         }
 
         List<Map<String, Object>> dataList = new ArrayList<>();
@@ -287,7 +286,7 @@ public class TeacherService {
         if (numName == null || numName.isEmpty()) {
             teacherList = personRepository.findPersonListByType("2");
         } else {
-            teacherList = personRepository.findPersonListByNumNameType(numName, "2");
+            teacherList = personRepository.findPersonListByNameAndType(numName, "2");
         }
 
         if (teacherList == null || teacherList.isEmpty())
