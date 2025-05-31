@@ -1,8 +1,11 @@
 package cn.edu.sdu.java.server.services;
 
 import cn.edu.sdu.java.server.models.Person;
+import cn.edu.sdu.java.server.models.Student;
 import cn.edu.sdu.java.server.payload.request.DataRequest;
 import cn.edu.sdu.java.server.payload.response.DataResponse;
+import cn.edu.sdu.java.server.payload.response.OptionItem;
+import cn.edu.sdu.java.server.payload.response.OptionItemList;
 import cn.edu.sdu.java.server.repositorys.PersonRepository;
 import cn.edu.sdu.java.server.util.CommonMethod;
 import org.apache.poi.xssf.usermodel.*;
@@ -48,7 +51,7 @@ public class TeacherService {
     /**
      * 获取教师列表
      */
-    public DataResponse getTeacherList(DataRequest dataRequest) {
+    public OptionItemList getTeacherList(DataRequest dataRequest) {
         String name = dataRequest.getString("name");
         if (name == null)
             name = "";
@@ -60,13 +63,21 @@ public class TeacherService {
             teacherList = personRepository.findPersonListByNameAndType(name, "2");
         }
 
-        List<Map<String, Object>> dataList = new ArrayList<>();
+        /*List<Map<String, Object>> dataList = new ArrayList<>();
         for (Person teacher : teacherList) {
             dataList.add(getMapFromTeacher(teacher));
         }
 
         return CommonMethod.getReturnData(dataList);
+         */
+
+        List<OptionItem> dataList = new ArrayList<>();
+        for (Person teacher : teacherList) {
+            dataList.add(new OptionItem( teacher.getPersonId(),teacher.getPersonId()+"", teacher.getNum()+"-"+teacher.getName()));
+        }
+        return new OptionItemList(0, dataList);
     }
+
 
     /**
      * 获取教师详细信息
