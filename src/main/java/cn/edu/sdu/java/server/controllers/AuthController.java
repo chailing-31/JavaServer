@@ -44,4 +44,5 @@ public class AuthController {
     public DataResponse registerUser(@Valid @RequestBody DataRequest dataRequest) {
         return authService.registerUser(dataRequest);
     }
+
 }

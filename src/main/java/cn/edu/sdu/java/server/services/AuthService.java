@@ -93,8 +93,8 @@ public class AuthService {
     /*
      *  注册用户示例，我们项目暂时不用， 所有用户通过管理员添加，这里注册，没有考虑关联人员信息的创建，使用时参加学生添加功能的实现
      */
-    @PostMapping("/registerUser")
-    public DataResponse registerUser(@Valid @RequestBody DataRequest dataRequest) {
+
+    public DataResponse registerUser( DataRequest dataRequest) {
         String username = dataRequest.getString("username");
         String password = dataRequest.getString("password");
         String perName = dataRequest.getString("perName");
