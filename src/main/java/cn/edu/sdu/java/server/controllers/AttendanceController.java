@@ -173,7 +173,7 @@ public class AttendanceController {
      * 获取考勤状态选项列表
      */
     @GetMapping("/status-options")
-    public DataResponse getAttendanceStatusOptions() {
+    public OptionItemList getAttendanceStatusOptions() {
         return attendanceService.getAttendanceStatusOptionList();
     }
 

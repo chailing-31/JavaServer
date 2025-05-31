@@ -211,11 +211,12 @@ public class AttendanceService {
     /**
      * 获取考勤状态选项列表
      */
-    public DataResponse getAttendanceStatusOptionList() {
-
-        return CommonMethod.getReturnData(Arrays.stream(Attendance.AttendanceStatus.values())
+    public OptionItemList getAttendanceStatusOptionList() {
+        List<OptionItem> items = Arrays.stream(Attendance.AttendanceStatus.values())
                 .map(status -> new OptionItem(status.name(), status.getDisplayName()))
-                .collect(Collectors.toList()));
+                .collect(Collectors.toList());
+
+        return new OptionItemList(0, items);
     }
 
 
