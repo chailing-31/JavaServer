@@ -2,6 +2,7 @@ package cn.edu.sdu.java.server.controllers;
 
 import cn.edu.sdu.java.server.payload.request.DataRequest;
 import cn.edu.sdu.java.server.payload.response.DataResponse;
+import cn.edu.sdu.java.server.payload.response.OptionItemList;
 import cn.edu.sdu.java.server.services.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class TeacherController {
      * 获取教师列表
      */
     @PostMapping("/getTeacherList")
-    public DataResponse getTeacherList(@Valid @RequestBody DataRequest dataRequest) {
+    public OptionItemList  getTeacherList(@Valid @RequestBody DataRequest dataRequest) {
         return teacherService.getTeacherList(dataRequest);
     }
 
