@@ -55,7 +55,7 @@ public class LeaveService {
             data.put("reason", leave.getReason());
             data.put("status", leave.getStatus());
             data.put("approveComment", leave.getApproveComment());
-            data.put("teacherId",leave.getTeacher().getPersonId());
+            data.put("teacherId",leave.getPerson().getNum()+"-"+leave.getPerson().getName());
             result.add(data);
         }
 
@@ -80,7 +80,7 @@ public class LeaveService {
             data.put("reason", leave.getReason());
             data.put("status", leave.getStatus());
             data.put("approveComment", leave.getApproveComment());
-            data.put("teacherId",leave.getTeacher().getPersonId());
+            data.put("teacherId",leave.getPerson().getNum()+"-"+leave.getPerson().getName());
             return data;
         }
         return null;

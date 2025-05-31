@@ -81,8 +81,8 @@ public class LeaveRequest {
 
     //关联老师信息
     @ManyToOne
-    @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+    @JoinColumn(name = "person_id")
+    private Person person;
 
     public LeaveRequest() {
         this.createTime = LocalDateTime.now();
