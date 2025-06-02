@@ -74,6 +74,7 @@ public class LeaveRequest {
     @Column(name = "update_time")
     private LocalDateTime updateTime;
 
+
     // 关联学生信息
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id", insertable = false, updatable = false)
@@ -81,8 +82,8 @@ public class LeaveRequest {
 
     //关联老师信息
     @ManyToOne
-    @JoinColumn(name = "person_id")
-    private Person person;
+    @JoinColumn(name = "teacher_id")
+    private Teacher teacher;
 
     public LeaveRequest() {
         this.createTime = LocalDateTime.now();

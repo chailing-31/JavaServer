@@ -31,17 +31,17 @@ public class LeaveController {
      * 获取请假列表
      */
     @PostMapping("/getLeaveList")
-    public ResponseEntity<DataResponse> getLeaveList(@RequestBody cn.edu.sdu.java.server.payload.request.DataRequest requestData) {
+    public DataResponse getLeaveList(@RequestBody cn.edu.sdu.java.server.payload.request.DataRequest requestData) {
         try {
             Map<String, String> params = new HashMap<>();
             params.put("numName", requestData.getString("numName"));
             params.put("leaveType", requestData.getString("leaveType"));
             params.put("status", requestData.getString("status"));
             
-            List<Map<String, Object>> data = leaveService.getLeaveList(params);
-            return ResponseEntity.ok(CommonMethod.getReturnData(data));
+            DataResponse data = leaveService.getLeaveList(params);
+            return data;
         } catch (Exception e) {
-            return ResponseEntity.ok(CommonMethod.getReturnMessageError("查询请假列表失败: " + e.getMessage()));
+            return CommonMethod.getReturnMessageError("查询请假列表失败: " + e.getMessage());
         }
     }
 
@@ -49,16 +49,16 @@ public class LeaveController {
      * 获取请假详细信息
      */
     @PostMapping("/getLeaveInfo")
-    public ResponseEntity<DataResponse> getLeaveInfo(@RequestBody cn.edu.sdu.java.server.payload.request.DataRequest requestData) {
+    public DataResponse getLeaveInfo(@RequestBody cn.edu.sdu.java.server.payload.request.DataRequest requestData) {
         try {
             Integer leaveId = requestData.getInteger("leaveId");
             if (leaveId == null) {
-                return ResponseEntity.ok(CommonMethod.getReturnMessageError("请假ID不能为空"));
+                return CommonMethod.getReturnMessageError("请假ID不能为空");
             }
-            Map<String, Object> data = leaveService.getLeaveInfo(leaveId);
-            return ResponseEntity.ok(CommonMethod.getReturnData(data));
+            DataResponse data = leaveService.getLeaveInfo(leaveId);
+            return data;
         } catch (Exception e) {
-            return ResponseEntity.ok(CommonMethod.getReturnMessageError("获取请假信息失败: " + e.getMessage()));
+            return CommonMethod.getReturnMessageError("获取请假信息失败: " + e.getMessage());
         }
     }
 
@@ -170,12 +170,12 @@ public class LeaveController {
      * 获取学生列表
      */
     @PostMapping("/getStudentList")
-    public ResponseEntity<DataResponse> getStudentList(@RequestBody cn.edu.sdu.java.server.payload.request.DataRequest requestData) {
+    public DataResponse getStudentList(@RequestBody cn.edu.sdu.java.server.payload.request.DataRequest requestData) {
         try {
-            List<Map<String, Object>> data = leaveService.getStudentList();
-            return ResponseEntity.ok(CommonMethod.getReturnData(data));
+            DataResponse data = leaveService.getStudentList();
+            return data;
         } catch (Exception e) {
-            return ResponseEntity.ok(CommonMethod.getReturnMessageError("获取学生列表失败: " + e.getMessage()));
+            return CommonMethod.getReturnMessageError("获取学生列表失败: " + e.getMessage());
         }
     }
 
@@ -184,7 +184,7 @@ public class LeaveController {
      * 获取指定教师需要审批的请假记录列表
      */
     @PostMapping("/getLeaveListByTeacher")
-    public ResponseEntity<DataResponse> getLeaveListByTeacher(@RequestBody cn.edu.sdu.java.server.payload.request.DataRequest requestData) {
+    public DataResponse getLeaveListByTeacher(@RequestBody cn.edu.sdu.java.server.payload.request.DataRequest requestData) {
         try {
             // 从请求数据中获取教师工号和姓名
             String teacherNum = requestData.getString("teacherNum");
@@ -192,18 +192,18 @@ public class LeaveController {
 
             // 参数校验
             if (teacherNum == null || teacherNum.isEmpty() || teacherName == null || teacherName.isEmpty()) {
-                return ResponseEntity.ok(CommonMethod.getReturnMessageError("教师工号和姓名不能为空"));
+                return CommonMethod.getReturnMessageError("教师工号和姓名不能为空");
             }
 
             // 调用服务层方法
-            List<Map<String, Object>> data = leaveService.getLeaveListByTeacher(teacherNum, teacherName);
+            DataResponse data = leaveService.getLeaveListByTeacher(teacherNum, teacherName);
 
             // 返回成功响应
-            return ResponseEntity.ok(CommonMethod.getReturnData(data));
+            return CommonMethod.getReturnData(data);
 
         } catch (Exception e) {
             // 异常处理
-            return ResponseEntity.ok(CommonMethod.getReturnMessageError("获取教师审批列表失败: " + e.getMessage()));
+            return CommonMethod.getReturnMessageError("获取教师审批列表失败: " + e.getMessage());
         }
     }
 

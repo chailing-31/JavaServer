@@ -61,9 +61,9 @@ public interface LeaveRequestRepository extends JpaRepository<LeaveRequest, Inte
                         @Param("endDate") java.time.LocalDateTime endDate);
 
         //根据批准老师ID查询请假记录
-        List<LeaveRequest> findByPersonPersonId (Integer personId);
+        List<LeaveRequest> findByTeacherPersonId (Integer personId);
 
         //根据老师教工号和姓名查询请假记录
-        List<LeaveRequest> findByPersonNumAndPersonName(String num, String name);
+        List<LeaveRequest> findByTeacherPersonNumAndTeacherPersonName(String num, String name);
 
 }

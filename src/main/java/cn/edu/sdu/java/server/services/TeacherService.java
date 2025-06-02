@@ -48,10 +48,16 @@ public class TeacherService {
         return m;
     }
 
+    //获取教师列表
+    public DataResponse getTeacherList(DataRequest dataRequest) {
+        String numName = dataRequest.getString("numName");
+        List<Map<String,Object>> dataList = getTeacherMapList(numName);
+        return CommonMethod.getReturnData(dataList);  //按照测试框架规范会送Map的list
+    }
     /**
-     * 获取教师列表
+     * 获取教师下拉框列表
      */
-    public OptionItemList getTeacherList(DataRequest dataRequest) {
+    public OptionItemList getTeacherOptionItemList(DataRequest dataRequest) {
         String name = dataRequest.getString("name");
         if (name == null)
             name = "";

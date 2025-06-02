@@ -6,6 +6,7 @@ import cn.edu.sdu.java.server.payload.response.OptionItemList;
 import cn.edu.sdu.java.server.services.TeacherService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.StreamingResponseBody;
 
@@ -23,8 +24,15 @@ public class TeacherController {
      * 获取教师列表
      */
     @PostMapping("/getTeacherList")
-    public OptionItemList  getTeacherList(@Valid @RequestBody DataRequest dataRequest) {
+    @PreAuthorize("hasRole('ADMIN')")
+    public DataResponse getTeacherList(@Valid @RequestBody DataRequest dataRequest) {
         return teacherService.getTeacherList(dataRequest);
+    }
+
+
+    @PostMapping("/getTeacherOptionItemList")
+    public OptionItemList  getTeacherOptionItemList(@Valid @RequestBody DataRequest dataRequest) {
+        return teacherService.getTeacherOptionItemList(dataRequest);
     }
 
     /**

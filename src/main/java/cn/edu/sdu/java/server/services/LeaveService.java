@@ -1,6 +1,7 @@
 package cn.edu.sdu.java.server.services;
 
 import cn.edu.sdu.java.server.models.LeaveRequest;
+import cn.edu.sdu.java.server.payload.response.DataResponse;
 import cn.edu.sdu.java.server.repositorys.LeaveRequestRepository;
 import cn.edu.sdu.java.server.util.CommonMethod;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -31,7 +32,7 @@ public class LeaveService {
     /**
      * 获取请假列表
      */
-    public List<Map<String, Object>> getLeaveList(Map<String, String> form) {
+    public DataResponse getLeaveList(Map<String, String> form) {
         String numName = form.get("numName");
         String leaveType = form.get("leaveType");
         String status = form.get("status");
@@ -55,17 +56,17 @@ public class LeaveService {
             data.put("reason", leave.getReason());
             data.put("status", leave.getStatus());
             data.put("approveComment", leave.getApproveComment());
-            data.put("teacherId",leave.getPerson().getNum()+"-"+leave.getPerson().getName());
+            data.put("teacherId",leave.getTeacher().getPerson().getNum()+"-"+leave.getTeacher().getPerson().getName());
             result.add(data);
         }
+        return CommonMethod.getReturnData(result);  //按照测试框架规范会送Map的list
 
-        return result;
     }
 
     /**
      * 获取请假详细信息
      */
-    public Map<String, Object> getLeaveInfo(Integer leaveId) {
+    public DataResponse getLeaveInfo(Integer leaveId) {
         Optional<LeaveRequest> optionalLeave = leaveRequestRepository.findById(leaveId);
         if (optionalLeave.isPresent()) {
             LeaveRequest leave = optionalLeave.get();
@@ -80,8 +81,8 @@ public class LeaveService {
             data.put("reason", leave.getReason());
             data.put("status", leave.getStatus());
             data.put("approveComment", leave.getApproveComment());
-            data.put("teacherId",leave.getPerson().getNum()+"-"+leave.getPerson().getName());
-            return data;
+            data.put("teacherId",leave.getTeacher().getPerson().getNum()+"-"+leave.getTeacher().getPerson().getName());
+            return CommonMethod.getReturnData(data);  //按照测试框架规范会送Map的list
         }
         return null;
     }
@@ -296,7 +297,7 @@ public class LeaveService {
     /**
      * 获取学生列表
      */
-    public List<Map<String, Object>> getStudentList() {
+    public DataResponse getStudentList() {
         try {
             List<cn.edu.sdu.java.server.models.Student> students = studentRepository.findStudentListByNumName("");
             List<Map<String, Object>> result = new ArrayList<>();
@@ -308,15 +309,15 @@ public class LeaveService {
                 data.put("title", student.getPerson().getNum() + "-" + student.getPerson().getName());
                 result.add(data);
             }
-            return result;
+            return CommonMethod.getReturnData(result);  //按照测试框架规范会送Map的list;
         } catch (Exception e) {
-            return new ArrayList<>();
+            return CommonMethod.getReturnData(new ArrayList<>());  //按照测试框架规范会送Map的list
         }
     }
 
     //获取要求该老师审批的所有记录
-    public List<Map<String, Object>> getLeaveListByTeacher(String num,String name) {
-        List<LeaveRequest> leaves = leaveRequestRepository.findByPersonNumAndPersonName(num,name);
+    public DataResponse  getLeaveListByTeacher(String num,String name) {
+        List<LeaveRequest> leaves = leaveRequestRepository.findByTeacherPersonNumAndTeacherPersonName(num,name);
         List<Map<String, Object>> result = new ArrayList<>();
         for (LeaveRequest leave : leaves) {
             Map<String, Object> data = new HashMap<>();
@@ -334,10 +335,10 @@ public class LeaveService {
             data.put("reason", leave.getReason());
             data.put("status", leave.getStatus());
             data.put("approveComment", leave.getApproveComment());
-            data.put("teacherId",leave.getPerson().getNum()+"-"+leave.getPerson().getName());
+            data.put("teacherId",leave.getTeacher().getPerson().getNum()+"-"+leave.getTeacher().getPerson().getName());
 
             result.add(data);
         }
-        return result;
+        return CommonMethod.getReturnData(result);  //按照测试框架规范会送Map的list;
     }
 }

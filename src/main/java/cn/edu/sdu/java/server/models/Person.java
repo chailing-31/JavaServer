@@ -75,9 +75,9 @@ public class Person {
     @Size(max = 1000)
     private String introduce;
 
-    @OneToMany(mappedBy = "person")
+    /*@OneToMany(mappedBy = "person")
     private List<LeaveRequest> leaveRequests = new ArrayList<>();
-
+    */
 
 
 }
