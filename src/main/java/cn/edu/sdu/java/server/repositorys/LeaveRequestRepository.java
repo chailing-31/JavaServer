@@ -1,6 +1,5 @@
 package cn.edu.sdu.java.server.repositorys;
 
-import cn.edu.sdu.java.server.models.LeaveApplication;
 import cn.edu.sdu.java.server.models.LeaveRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -65,6 +64,6 @@ public interface LeaveRequestRepository extends JpaRepository<LeaveRequest, Inte
         List<LeaveRequest> findByPersonPersonId (Integer personId);
 
         //根据老师教工号和姓名查询请假记录
-        List<LeaveRequest> findByPersonNumAndPersonName(String num,String name);
+        List<LeaveRequest> findByPersonNumAndPersonName(String num, String name);
 
 }

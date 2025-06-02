@@ -178,4 +178,33 @@ public class LeaveController {
             return ResponseEntity.ok(CommonMethod.getReturnMessageError("获取学生列表失败: " + e.getMessage()));
         }
     }
+
+
+    /**
+     * 获取指定教师需要审批的请假记录列表
+     */
+    @PostMapping("/getLeaveListByTeacher")
+    public ResponseEntity<DataResponse> getLeaveListByTeacher(@RequestBody cn.edu.sdu.java.server.payload.request.DataRequest requestData) {
+        try {
+            // 从请求数据中获取教师工号和姓名
+            String teacherNum = requestData.getString("teacherNum");
+            String teacherName = requestData.getString("teacherName");
+
+            // 参数校验
+            if (teacherNum == null || teacherNum.isEmpty() || teacherName == null || teacherName.isEmpty()) {
+                return ResponseEntity.ok(CommonMethod.getReturnMessageError("教师工号和姓名不能为空"));
+            }
+
+            // 调用服务层方法
+            List<Map<String, Object>> data = leaveService.getLeaveListByTeacher(teacherNum, teacherName);
+
+            // 返回成功响应
+            return ResponseEntity.ok(CommonMethod.getReturnData(data));
+
+        } catch (Exception e) {
+            // 异常处理
+            return ResponseEntity.ok(CommonMethod.getReturnMessageError("获取教师审批列表失败: " + e.getMessage()));
+        }
+    }
+
 }

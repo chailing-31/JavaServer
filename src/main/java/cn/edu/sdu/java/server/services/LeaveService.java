@@ -313,4 +313,31 @@ public class LeaveService {
             return new ArrayList<>();
         }
     }
+
+    //获取要求该老师审批的所有记录
+    public List<Map<String, Object>> getLeaveListByTeacher(String num,String name) {
+        List<LeaveRequest> leaves = leaveRequestRepository.findByPersonNumAndPersonName(num,name);
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (LeaveRequest leave : leaves) {
+            Map<String, Object> data = new HashMap<>();
+            data.put("leaveId", leave.getLeaveId());
+            data.put("num", leave.getNum());
+            data.put("studentId", leave.getStudent().getPersonId());
+            data.put("studentName",
+                    leave.getStudent() != null && leave.getStudent().getPerson() != null
+                            ? leave.getStudent().getPerson().getName()
+                            : "");
+            data.put("leaveType", leave.getLeaveType());
+            data.put("startDate", leave.getStartDate() != null ? leave.getStartDate().toString() : "");
+            data.put("endDate", leave.getEndDate() != null ? leave.getEndDate().toString() : "");
+            data.put("days", leave.getDays());
+            data.put("reason", leave.getReason());
+            data.put("status", leave.getStatus());
+            data.put("approveComment", leave.getApproveComment());
+            data.put("teacherId",leave.getPerson().getNum()+"-"+leave.getPerson().getName());
+
+            result.add(data);
+        }
+        return result;
+    }
 }
