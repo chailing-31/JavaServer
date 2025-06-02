@@ -1,6 +1,6 @@
 package cn.edu.sdu.java.server.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+/*import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -30,3 +30,4 @@ public class Teacher {
 
 
 }
+*/

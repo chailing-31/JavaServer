@@ -1,7 +1,7 @@
 package cn.edu.sdu.java.server.controllers;
 
 
-import cn.edu.sdu.java.server.models.LeaveApplication;
+/*import cn.edu.sdu.java.server.models.LeaveApplication;
 import cn.edu.sdu.java.server.repositorys.StudentRepository;
 import cn.edu.sdu.java.server.services.LeaveApplicationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,3 +91,4 @@ public class LeaveApplicationController {
                 leaveApplicationService.hasOverlappingLeaves(studentId, startTime, endTime));
     }
 }
+*/

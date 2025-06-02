@@ -45,6 +45,7 @@ public class Student {
     private String phone;
 
     @OneToMany(mappedBy = "student")
-    private List<LeaveApplication> leaveApplications = new ArrayList<>();
+    private List<LeaveRequest> leaveRequests = new ArrayList<>();
+
 
 }

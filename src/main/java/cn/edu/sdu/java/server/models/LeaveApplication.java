@@ -1,6 +1,6 @@
 package cn.edu.sdu.java.server.models;
 
-import jakarta.persistence.*;
+/*import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -66,4 +66,4 @@ public class LeaveApplication {
         CANCELLED       // 已取消
     }
 
-}
+}*/

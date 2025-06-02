@@ -25,6 +25,10 @@ import jakarta.validation.constraints.Size;
  */
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @Entity
@@ -70,6 +74,10 @@ public class Person {
 
     @Size(max = 1000)
     private String introduce;
+
+    @OneToMany(mappedBy = "person")
+    private List<LeaveRequest> leaveRequests = new ArrayList<>();
+
 
 
 }

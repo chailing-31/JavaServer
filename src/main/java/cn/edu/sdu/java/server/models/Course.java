@@ -32,9 +32,11 @@ public class Course  {
     @Size(max = 50)
     private String name;
     private Integer credit;
+
     @ManyToOne
     @JoinColumn(name="pre_course_id")
     private Course preCourse;
+
     @Size(max = 12)
     private String coursePath;
 

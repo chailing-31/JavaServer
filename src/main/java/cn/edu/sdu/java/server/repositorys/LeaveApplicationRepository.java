@@ -1,6 +1,6 @@
 package cn.edu.sdu.java.server.repositorys;
 
-import cn.edu.sdu.java.server.models.LeaveApplication;
+/*import cn.edu.sdu.java.server.models.LeaveApplication;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -30,4 +30,4 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
 
     List<LeaveApplication> findByStudentPersonPersonIdAndStatusNot(Integer personId, LeaveApplication.ApprovalStatus status);
 
-}
+}*/
