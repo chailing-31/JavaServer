@@ -56,7 +56,7 @@ public class LeaveService {
             data.put("reason", leave.getReason());
             data.put("status", leave.getStatus());
             data.put("approveComment", leave.getApproveComment());
-            data.put("teacherId",leave.getTeacher().getPerson().getNum()+"-"+leave.getTeacher().getPerson().getName());
+            data.put("teacherId",leave.getStudent().getPersonId());
             result.add(data);
         }
         return CommonMethod.getReturnData(result);  //按照测试框架规范会送Map的list
@@ -81,7 +81,7 @@ public class LeaveService {
             data.put("reason", leave.getReason());
             data.put("status", leave.getStatus());
             data.put("approveComment", leave.getApproveComment());
-            data.put("teacherId",leave.getTeacher().getPerson().getNum()+"-"+leave.getTeacher().getPerson().getName());
+            data.put("teacherId",leave.getStudent().getPersonId());
             return CommonMethod.getReturnData(data);  //按照测试框架规范会送Map的list
         }
         return null;
