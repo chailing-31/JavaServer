@@ -316,7 +316,7 @@ public class LeaveService {
     }
 
     //获取要求该老师审批的所有记录
-    public DataResponse  getLeaveListByTeacher(String num,String name) {
+    /*public DataResponse  getLeaveListByTeacher(String num,String name) {
         List<LeaveRequest> leaves = leaveRequestRepository.findByTeacherPersonNumAndTeacherPersonName(num,name);
         List<Map<String, Object>> result = new ArrayList<>();
         for (LeaveRequest leave : leaves) {
@@ -335,10 +335,10 @@ public class LeaveService {
             data.put("reason", leave.getReason());
             data.put("status", leave.getStatus());
             data.put("approveComment", leave.getApproveComment());
-            data.put("teacherId",leave.getTeacher().getPerson().getNum()+"-"+leave.getTeacher().getPerson().getName());
+            data.put("teacherId",leave.getPerson().getNum()+"-"+leave.getPerson().getName());
 
             result.add(data);
         }
         return CommonMethod.getReturnData(result);  //按照测试框架规范会送Map的list;
-    }
+    }*/
 }

@@ -44,8 +44,8 @@ public class Student {
     @Column(length = 50)
     private String phone;
 
-    @OneToMany(mappedBy = "student")
-    private List<LeaveRequest> leaveRequests = new ArrayList<>();
+    //@OneToMany(mappedBy = "student")
+    //private List<LeaveRequest> leaveRequests = new ArrayList<>();
 
 
 }

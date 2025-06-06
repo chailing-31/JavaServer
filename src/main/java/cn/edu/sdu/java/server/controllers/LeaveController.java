@@ -183,7 +183,7 @@ public class LeaveController {
     /**
      * 获取指定教师需要审批的请假记录列表
      */
-    @PostMapping("/getLeaveListByTeacher")
+    /*@PostMapping("/getLeaveListByTeacher")
     public DataResponse getLeaveListByTeacher(@RequestBody cn.edu.sdu.java.server.payload.request.DataRequest requestData) {
         try {
             // 从请求数据中获取教师工号和姓名
@@ -205,6 +205,6 @@ public class LeaveController {
             // 异常处理
             return CommonMethod.getReturnMessageError("获取教师审批列表失败: " + e.getMessage());
         }
-    }
+    }*/
 
 }
