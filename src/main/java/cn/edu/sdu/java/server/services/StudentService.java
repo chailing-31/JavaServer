@@ -97,6 +97,7 @@ public class StudentService {
         m.put("address", teacher.getAddress());
         m.put("major", teacher.getMajor());
         m.put("className", teacher.getClassName());
+        m.put("birthday",teacher.getBirthday());
 
         return m;
     }
@@ -472,7 +473,7 @@ public class StudentService {
         for (Score s : sList) {
             m = new HashMap<>();
             c = s.getCourse();
-            m.put("studentNum", s.getStudent().getPerson().getNum());
+            m.put("studentNum", s.getStudent().getNum());
             m.put("scoreId", s.getScoreId());
             m.put("courseNum", c.getNum());
             m.put("courseName", c.getName());

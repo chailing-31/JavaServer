@@ -24,7 +24,7 @@ public class Score {
 
     @ManyToOne
     @JoinColumn(name = "personId")
-    private Student student;
+    private Person student;
 
     @ManyToOne
     @JoinColumn(name = "courseId")

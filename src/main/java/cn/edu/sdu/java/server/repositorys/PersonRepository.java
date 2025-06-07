@@ -1,7 +1,11 @@
 package cn.edu.sdu.java.server.repositorys;
 
 import cn.edu.sdu.java.server.models.Person;
+import cn.edu.sdu.java.server.models.Student;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,7 +20,11 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
 
     List<Person> findPersonListByType(String type);
 
-    List<Person> findPersonListByNameAndType(String numName, String type);
+    List<Person> findPersonListByNameAndType(String Name, String type);
+
+
+    @Query(value = "from Person where ?1='' or num like %?1% or name like %?1% ")
+    List<Person> findPersonListByNumName(String numName);
 }
 
 

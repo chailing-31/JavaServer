@@ -1,6 +1,7 @@
 package cn.edu.sdu.java.server.services;
 
 import cn.edu.sdu.java.server.models.Course;
+import cn.edu.sdu.java.server.models.Person;
 import cn.edu.sdu.java.server.models.Score;
 import cn.edu.sdu.java.server.models.Student;
 import cn.edu.sdu.java.server.payload.request.DataRequest;
@@ -8,6 +9,7 @@ import cn.edu.sdu.java.server.payload.response.DataResponse;
 import cn.edu.sdu.java.server.payload.response.OptionItem;
 import cn.edu.sdu.java.server.payload.response.OptionItemList;
 import cn.edu.sdu.java.server.repositorys.CourseRepository;
+import cn.edu.sdu.java.server.repositorys.PersonRepository;
 import cn.edu.sdu.java.server.repositorys.ScoreRepository;
 import cn.edu.sdu.java.server.repositorys.StudentRepository;
 import cn.edu.sdu.java.server.util.CommonMethod;
@@ -18,18 +20,18 @@ import java.util.*;
 public class ScoreService {
     private final CourseRepository courseRepository;
     private final ScoreRepository scoreRepository;
-    private final StudentRepository studentRepository;
+    private final PersonRepository studentRepository;
 
-    public ScoreService(CourseRepository courseRepository, ScoreRepository scoreRepository, StudentRepository studentRepository) {
+    public ScoreService(CourseRepository courseRepository, ScoreRepository scoreRepository, PersonRepository studentRepository) {
         this.courseRepository = courseRepository;
         this.scoreRepository = scoreRepository;
         this.studentRepository = studentRepository;
     }
     public OptionItemList getStudentItemOptionList( DataRequest dataRequest) {
-        List<Student> sList = studentRepository.findStudentListByNumName("");  //数据库查询操作
+        List<Person> sList = studentRepository.findPersonListByNumName("");  //数据库查询操作
         List<OptionItem> itemList = new ArrayList<>();
-        for (Student s : sList) {
-            itemList.add(new OptionItem( s.getPersonId(),s.getPersonId()+"", s.getPerson().getNum()+"-"+s.getPerson().getName()));
+        for (Person s : sList) {
+            itemList.add(new OptionItem( s.getPersonId(),s.getPersonId()+"", s.getNum()+"-"+s.getName()));
         }
         return new OptionItemList(0, itemList);
     }
@@ -58,8 +60,8 @@ public class ScoreService {
             m.put("scoreId", s.getScoreId()+"");
             m.put("personId",s.getStudent().getPersonId()+"");
             m.put("courseId",s.getCourse().getCourseId()+"");
-            m.put("studentNum",s.getStudent().getPerson().getNum());
-            m.put("studentName",s.getStudent().getPerson().getName());
+            m.put("studentNum",s.getStudent().getNum());
+            m.put("studentName",s.getStudent().getName());
             m.put("className",s.getStudent().getClassName());
             m.put("courseNum",s.getCourse().getNum());
             m.put("courseName",s.getCourse().getName());
