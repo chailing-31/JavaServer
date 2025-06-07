@@ -20,7 +20,7 @@ public class TechnologyController {
     }
 
     /**
-     * 获取竞赛列表
+     * 获取科技成果列表
      */
     @PostMapping("/getTechnologyList")
     public DataResponse getTechnologyList(@Valid @RequestBody DataRequest dataRequest) {
@@ -28,7 +28,7 @@ public class TechnologyController {
     }
 
     /**
-     * 获取竞赛详细信息
+     * 获取科技成果详细信息
      */
     @PostMapping("/getTechnologyInfo")
     public DataResponse getTechnologyInfo(@Valid @RequestBody DataRequest dataRequest) {
@@ -36,7 +36,7 @@ public class TechnologyController {
     }
 
     /**
-     * 保存竞赛信息
+     * 保存科技成果信息
      */
     @PostMapping("/technologyEditSave")
     public DataResponse technologyEditSave(@Valid @RequestBody DataRequest dataRequest) {
@@ -44,7 +44,7 @@ public class TechnologyController {
     }
 
     /**
-     * 保存竞赛信息（兼容旧版本）
+     * 保存科技成果信息（兼容旧版本）
      */
     @PostMapping("/technologySave")
     public DataResponse technologySave(@Valid @RequestBody DataRequest dataRequest) {
@@ -52,7 +52,7 @@ public class TechnologyController {
     }
 
     /**
-     * 删除竞赛
+     * 删除科技成果
      */
     @PostMapping("/technologyDelete")
     public DataResponse technologyDelete(@Valid @RequestBody DataRequest dataRequest) {
@@ -60,7 +60,7 @@ public class TechnologyController {
     }
 
     /**
-     * 获取所有竞赛列表（用于其他模块选择）
+     * 获取所有科技成果列表（用于其他模块选择）
      */
     @PostMapping("/getAllTechnology")
     public DataResponse getAllTechnologies(@Valid @RequestBody DataRequest dataRequest) {
