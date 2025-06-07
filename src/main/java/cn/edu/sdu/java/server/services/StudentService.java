@@ -173,11 +173,11 @@ public class StudentService {
 
 
     public DataResponse getStudentInfo(DataRequest dataRequest) {
-        Integer personId = dataRequest.getInteger("personId");
+        String num = dataRequest.getString("num");
         Person s = null;
         Optional<Person> op;
-        if (personId != null) {
-            op = personRepository.findById(personId); //根据学生主键从数据库查询学生的信息
+        if (num != null) {
+            op = personRepository.findByNum(num); //根据学生主键从数据库查询学生的信息
             if (op.isPresent()) {
                 s = op.get();
             }
@@ -348,27 +348,27 @@ public class StudentService {
             Optional<Person> op;
             Person teacher = null;
 
-            if (personId != null) {
-                op = personRepository.findById(personId);
-                if (op.isPresent() && "2".equals(op.get().getType())) {
+            if (num != null) {
+                op = personRepository.findByNum(num);
+                if (op.isPresent() && "1".equals(op.get().getType())) {
                     teacher = op.get();
                 }
             }
 
             // 检查教师编号是否已存在（排除当前编辑的教师）
             Optional<Person> existingTeacher = personRepository.findByNum(num.trim());
-            if (existingTeacher.isPresent()) {
+            /*if (existingTeacher.isPresent()) {
                 if (teacher == null || !existingTeacher.get().getPersonId().equals(teacher.getPersonId())) {
                     return CommonMethod.getReturnMessageError("学生编号已经存在，不能添加或修改！");
                 }
-            }
+            }*/
 
             if (teacher == null) {
                 teacher = new Person();
                 teacher.setType("1"); // 设置为教师类型
                 log.info("创建新学生: {}", name);
             } else {
-                log.info("更新学生: {} (ID: {})", name, personId);
+                log.info("更新学生: {} (ID: {})", name, teacher.getPersonId());
             }
 
             teacher.setNum(num.trim());

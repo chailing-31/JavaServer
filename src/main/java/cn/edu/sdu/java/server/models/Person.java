@@ -34,8 +34,11 @@ import java.util.List;
 @Entity
 @Table(	name = "person",
         uniqueConstraints = {
-                @UniqueConstraint(columnNames = "num"),   //人员表中的编号 唯一
-        })
+                @UniqueConstraint(columnNames = "num")}   //人员表中的编号 唯一
+         )
+/*@Table(	name = "person",
+        uniqueConstraints = {}   //人员表中的编号 唯一
+)*/
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
